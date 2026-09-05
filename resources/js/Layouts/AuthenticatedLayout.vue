@@ -5,9 +5,12 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const showingNavigationDropdown = ref(false);
+
+const isAdmin = computed(() => usePage().props.auth?.isAdmin ?? false);
 </script>
 
 <template>
@@ -41,10 +44,18 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink
+                                    v-if="isAdmin"
                                     :href="route('contacts.index')"
-                                    :active="route().current('contacts.index')"
+                                    :active="route().current('contacts.*')"
                                 >
                                     Contatos
+                                </NavLink>
+                                <NavLink
+                                    v-if="isAdmin"
+                                    :href="route('categories.index')"
+                                    :active="route().current('categories.*')"
+                                >
+                                    Categorias
                                 </NavLink>
                             </div>
                         </div>
@@ -154,10 +165,18 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
+                            v-if="isAdmin"
                             :href="route('contacts.index')"
-                            :active="route().current('contacts.index')"
+                            :active="route().current('contacts.*')"
                         >
                             Contatos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="isAdmin"
+                            :href="route('categories.index')"
+                            :active="route().current('categories.*')"
+                        >
+                            Categorias
                         </ResponsiveNavLink>
                     </div>
 
