@@ -57,6 +57,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Asset URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the "asset()" helper to build URLs for files in the
+    | public directory. Set ASSET_URL in the .env when the app is served from
+    | a CDN or a subfolder. When empty, Laravel falls back to APP_URL.
+    |
+    */
+
+    'asset_url' => env('ASSET_URL'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

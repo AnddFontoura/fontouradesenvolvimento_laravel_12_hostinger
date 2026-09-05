@@ -1,9 +1,7 @@
 <script setup>
-// Logo da marca Fontoura Desenvolvimento (dragão em PNG).
-// Coloque a arte em: public/img/fontoura-dragao.png
-//
-// Use a prop `variant` para escolher entre apenas o dragão ("mark")
-// ou o lockup completo com o texto ("full").
+import { computed } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+
 defineProps({
     variant: {
         type: String,
@@ -11,10 +9,12 @@ defineProps({
     },
 })
 
-// Caminho absoluto a partir da raiz do domínio. Os arquivos de `public/` são
-// servidos a partir da raiz (tanto local quanto na Hostinger), então o caminho
-// absoluto funciona independentemente da rota atual e do <base href>.
-const logoSrc = '/img/fontoura-dragao.png'
+// Build an absolute URL for the logo using the asset base shared from the
+// backend, so it resolves correctly on any route (and in a subfolder deploy).
+const logoSrc = computed(() => {
+    const base = usePage().props.assetUrl ?? ''
+    return `${base}/img/fontoura-dragao.png`
+})
 </script>
 
 <template>

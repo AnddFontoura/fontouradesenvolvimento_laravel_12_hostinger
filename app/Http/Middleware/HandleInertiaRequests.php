@@ -31,6 +31,10 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            // Base URL for public assets (e.g. images in public/).
+            // Falls back to APP_URL so it works both at the domain root
+            // and when the app is served from a subfolder.
+            'assetUrl' => rtrim(config('app.asset_url') ?: config('app.url'), '/'),
             'auth' => [
                 'user' => $request->user(),
                 'isAdmin' => (bool) $request->user()?->hasRole('admin'),
