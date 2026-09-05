@@ -20,8 +20,8 @@ import { Head } from '@inertiajs/vue3';
                 <div
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
                 >
-                    <div class="p-6 text-gray-900">
-                        You're logged in!
+                    <div class="p-6 text-brand-dark-800">
+                        Você está logado! Bem-vindo ao painel da Fontoura Desenvolvimento.
                     </div>
                 </div>
             </div>

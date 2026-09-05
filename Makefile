@@ -9,11 +9,11 @@ restart:
 	docker compose up -d
 
 set-database:
-	docker exec -it ale_psicologa_humanista php artisan migrate
-	docker exec -it ale_psicologa_humanista php artisan db:seed
+	docker exec -it fontoura_desenvolvimento php artisan migrate
+	docker exec -it fontoura_desenvolvimento php artisan db:seed
 
 reset-database:
-	docker exec -it ale_psicologa_humanista php artisan migrate:fresh
+	docker exec -it fontoura_desenvolvimento php artisan migrate:fresh
 
 build-js:
 	npm run build

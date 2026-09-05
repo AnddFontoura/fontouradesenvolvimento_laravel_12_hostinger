@@ -1,208 +1,228 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
+import ApplicationLogo from '@/Components/ApplicationLogo.vue'
+
+defineProps({
+    canLogin: Boolean,
+    canRegister: Boolean,
+    laravelVersion: String,
+    phpVersion: String,
+})
 
 const whatsappLink =
-    "https://wa.me/5519998845678?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta"
+    'https://wa.me/5519998845678?text=Ol%C3%A1,%20gostaria%20de%20um%20or%C3%A7amento%20de%20desenvolvimento'
+
+const servicos = [
+    {
+        titulo: 'Aplicações Web sob medida',
+        descricao:
+            'Sistemas robustos com Laravel e Vue, do MVP à plataforma completa, focados em performance e escalabilidade.',
+    },
+    {
+        titulo: 'APIs e integrações',
+        descricao:
+            'APIs REST bem documentadas, integrações com gateways de pagamento, ERPs e serviços de terceiros.',
+    },
+    {
+        titulo: 'Modernização de sistemas',
+        descricao:
+            'Migração e refatoração de sistemas legados para stacks modernas, mantendo o negócio rodando sem sustos.',
+    },
+    {
+        titulo: 'Consultoria e sustentação',
+        descricao:
+            'Acompanhamento técnico contínuo, revisão de arquitetura e suporte para o seu time crescer com segurança.',
+    },
+]
+
+const diferenciais = [
+    'Código limpo e testável, pensado para durar',
+    'Comunicação direta, sem enrolação técnica',
+    'Entregas incrementais com feedback constante',
+    'Foco no resultado do negócio, não só no código',
+]
 </script>
 
 <template>
-  <Head title="Psicóloga Humanista" />
+    <Head title="Desenvolvimento de Software" />
 
-  <div class="bg-sky-50 text-slate-800">
-    <!-- HERO -->
-    <section class="bg-gradient-to-br from-sky-100 via-sky-50 to-rose-100 py-20">
-      <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[2fr_1fr] gap-12 items-center">
-        <div>
-          <p class="inline-flex items-center rounded-full bg-white/80 px-4 py-2 text-sm font-medium text-sky-700 shadow-sm">
-            Psicologia com acolhimento, escuta e presença
-          </p>
+    <div class="min-h-screen bg-white text-brand-dark-800">
+        <!-- HEADER -->
+        <header class="sticky top-0 z-30 border-b border-brand-dark-100 bg-white/90 backdrop-blur">
+            <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+                <ApplicationLogo variant="full" class="h-10" />
 
-          <h1 class="mt-6 text-4xl md:text-5xl font-bold leading-tight text-slate-900">
-            Um espaço livre e seguro para seu autocuidado e desenvolvimento, respeitando sua singularidade.
-          </h1>
+                <nav class="hidden items-center gap-8 md:flex">
+                    <a href="#servicos" class="text-sm font-medium text-brand-dark-600 transition hover:text-brand-orange-600">Serviços</a>
+                    <a href="#sobre" class="text-sm font-medium text-brand-dark-600 transition hover:text-brand-orange-600">Sobre</a>
+                    <a href="#contato" class="text-sm font-medium text-brand-dark-600 transition hover:text-brand-orange-600">Contato</a>
+                </nav>
 
-          <p class="mt-6 text-lg md:text-xl text-slate-700 max-w-2xl">
-            Atendimento psicológico humanista para pessoas que buscam autoconhecimento,
-            equilíbrio emocional e uma vida mais autêntica.
-          </p>
+                <div v-if="canLogin" class="flex items-center gap-3">
+                    <Link
+                        :href="route('login')"
+                        class="text-sm font-semibold text-brand-dark-700 transition hover:text-brand-orange-600"
+                    >
+                        Entrar
+                    </Link>
+                    <Link
+                        v-if="canRegister"
+                        :href="route('register')"
+                        class="rounded-lg bg-brand-orange-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-orange-700"
+                    >
+                        Criar conta
+                    </Link>
+                </div>
+            </div>
+        </header>
 
-          <div class="mt-8 flex flex-col sm:flex-row gap-4">
-            <a
-              :href="whatsappLink"
-              target="_blank"
-              class="inline-flex justify-center bg-sky-500 hover:bg-sky-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg transition"
-            >
-              Fale comigo pelo WhatsApp
-            </a>
-          </div>
-        </div>
+        <!-- HERO -->
+        <section class="relative overflow-hidden bg-brand-dark-900 text-white">
+            <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-orange-600/30 blur-3xl"></div>
+            <div class="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-brand-orange-500/20 blur-3xl"></div>
 
-        <div class="flex justify-center md:justify-end">
-          <div class="relative">
-            <div class="absolute inset-0 -m-4 rounded-3xl bg-sky-200/60 blur-2xl"></div>
-            <img
-              src="public/img/arvore_ale_redux.jpeg"
-              alt="Psicóloga humanista"
-              class="relative w-full max-w-md rounded-3xl shadow-2xl object-cover aspect-[4/5] border-4 border-white"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+            <div class="relative mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[3fr_2fr] md:items-center">
+                <div>
+                    <p class="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-brand-orange-300">
+                        Software sob medida para o seu negócio
+                    </p>
 
-    <!-- SOBRE MIM -->
-    <section id="sobre-mim" class="py-20 bg-white">
-      <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-3xl font-bold mb-6 text-slate-900">Sobre mim</h2>
-          <p class="text-slate-600 mb-4 leading-relaxed">
-            Sou uma psicóloga com abordagem humanista, dedicada a oferecer um atendimento
-            acolhedor, ético e sensível às histórias únicas de cada pessoa.
-          </p>
-          <p class="text-slate-600 mb-4 leading-relaxed">
-            Acredito na potência do vínculo terapêutico, na escuta genuína e no respeito ao
-            ritmo de cada processo de transformação.
-          </p>
-          <p class="text-slate-600 leading-relaxed">
-            Meu trabalho é caminhar ao seu lado para que você possa se compreender melhor,
-            fortalecer sua autonomia e construir uma vida com mais sentido.
-          </p>
+                    <h1 class="mt-6 text-4xl font-extrabold leading-tight md:text-5xl">
+                        Transformamos ideias em
+                        <span class="bg-gradient-to-r from-brand-orange-500 to-brand-orange-600 bg-clip-text text-transparent">
+                            produtos digitais
+                        </span>
+                        que geram resultado.
+                    </h1>
 
-        </div>
+                    <p class="mt-6 max-w-xl text-lg text-brand-dark-100">
+                        A Fontoura Desenvolvimento cria aplicações web modernas, escaláveis e
+                        confiáveis. Da concepção à sustentação, cuidamos da tecnologia para
+                        você focar no que importa.
+                    </p>
 
-        <div class="grid gap-4">
-          <div class="rounded-2xl bg-sky-50 p-6 shadow-sm border border-sky-100">
-            <p class="text-slate-600">
-              Psicóloga clínica com ampla experiência no atendimento online, com Mestrado. Defendeu a dissertação
-              "Educação e Cultura: Um estudo sobre o processo de (de)formação cultural dos indivíduos"
-            </p>
-          </div>
-          <div class="rounded-2xl bg-rose-50 p-6 shadow-sm border border-rose-100">
-            <p class="text-slate-600">
-              Professora universitária e orientadora de estágio clínico. Supervisão e orientação de trabalhos
-              acadêmicos e para profissionais iniciantes. Orientação de TCC e outros.
-            </p>
-          </div>
-          <div class="rounded-2xl bg-sky-50 p-6 shadow-sm border border-sky-100">
-            <p class="text-slate-600">
-              Conciliadora e Mediadora de conflitos do TJSP. Pacificação social através do fim dos litígios,
-              desenvolver a comunicação não violenta para estabelecer bons acordos em todas as áreas.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+                    <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+                        <a
+                            :href="whatsappLink"
+                            target="_blank"
+                            class="inline-flex justify-center rounded-xl bg-brand-orange-600 px-8 py-4 font-semibold text-white shadow-lg transition hover:bg-brand-orange-700"
+                        >
+                            Solicitar orçamento
+                        </a>
+                        <a
+                            href="#servicos"
+                            class="inline-flex justify-center rounded-xl border border-white/20 px-8 py-4 font-semibold text-white transition hover:bg-white/10"
+                        >
+                            Ver serviços
+                        </a>
+                    </div>
+                </div>
 
-    <!-- PSICOLOGIA HUMANISTA -->
-    <section id="psicologia-humanista" class="py-20 bg-gradient-to-b from-sky-50 to-rose-50">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <h2 class="text-3xl font-bold mb-4 text-slate-900">Psicologia Humanista</h2>
-          <p class="text-slate-600 leading-relaxed">
-            A Psicologia Humanista valoriza a experiência subjetiva, a liberdade de escolha,
-            a responsabilidade pessoal e a capacidade de crescimento inerente a cada ser humano.
-          </p>
-        </div>
+                <div class="flex justify-center md:justify-end">
+                    <div class="relative">
+                        <div class="absolute inset-0 -m-6 rounded-full bg-brand-orange-500/20 blur-2xl"></div>
+                        <ApplicationLogo class="relative h-56 w-56 drop-shadow-2xl md:h-72 md:w-72" />
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="bg-white p-8 rounded-2xl shadow-sm border border-sky-100">
-            <p class="text-slate-600">
-              "Aceitar quem somos hoje é o primeiro passo para construir quem queremos ser amanhã."
-            </p>
-            <h3 class="font-semibold text-xl mb-4 text-sky-700">
-              Carl Rogers
-            </h3>
-          </div>
+        <!-- SERVIÇOS -->
+        <section id="servicos" class="bg-white py-24">
+            <div class="mx-auto max-w-6xl px-6">
+                <div class="mx-auto mb-14 max-w-2xl text-center">
+                    <h2 class="text-3xl font-bold text-brand-dark-900">O que fazemos</h2>
+                    <p class="mt-4 text-brand-dark-500">
+                        Soluções completas de desenvolvimento, sempre com foco em qualidade e no
+                        objetivo do seu negócio.
+                    </p>
+                </div>
 
-          <div class="bg-white p-8 rounded-2xl shadow-sm border border-rose-100">
-            <p class="text-slate-600">
-              "As pessoas mudam quando aceitam quem são."
-            </p>
-            <h3 class="font-semibold text-xl mb-4 text-rose-600">
-              Fritz Perls
-            </h3>
-          </div>
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div
+                        v-for="servico in servicos"
+                        :key="servico.titulo"
+                        class="group rounded-2xl border border-brand-dark-100 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:border-brand-orange-200 hover:shadow-md"
+                    >
+                        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-orange-500 to-brand-orange-600 text-white">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="mb-2 text-xl font-semibold text-brand-dark-900">{{ servico.titulo }}</h3>
+                        <p class="text-brand-dark-500">{{ servico.descricao }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-          <div class="bg-white p-8 rounded-2xl shadow-sm border border-sky-100">
-            <p class="text-slate-600">
-              "Se a única ferramenta que você tem é um martelo, você tende a ver todo problema como um prego"
-            </p>
-            <h3 class="font-semibold text-xl mb-4 text-sky-700">
-              Abraham Maslow
-            </h3>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- SOBRE / DIFERENCIAIS -->
+        <section id="sobre" class="bg-brand-dark-50 py-24">
+            <div class="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-brand-dark-900">Sobre a Fontoura</h2>
+                    <p class="mt-6 leading-relaxed text-brand-dark-600">
+                        Somos uma empresa de desenvolvimento de software focada em entregar
+                        soluções sólidas e sustentáveis. Trabalhamos lado a lado com nossos
+                        clientes, entendendo o problema antes de escrever a primeira linha de
+                        código.
+                    </p>
+                    <p class="mt-4 leading-relaxed text-brand-dark-600">
+                        Nosso stack principal é Laravel e Vue, com Inertia e Tailwind, o que nos
+                        permite construir produtos rápidos, seguros e fáceis de evoluir.
+                    </p>
+                </div>
 
-    <!-- MEU TRABALHO -->
-    <section id="meu-trabalho" class="py-20 bg-white">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <h2 class="text-3xl font-bold mb-4 text-slate-900">Meu trabalho</h2>
-          <p class="text-slate-600">
-            Atuo com foco em demandas emocionais e relacionais, sempre respeitando o tempo e a singularidade de cada pessoa.
-          </p>
+                <ul class="grid gap-4">
+                    <li
+                        v-for="item in diferenciais"
+                        :key="item"
+                        class="flex items-start gap-3 rounded-xl border border-brand-dark-100 bg-white p-5 shadow-sm"
+                    >
+                        <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-orange-600 text-white">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </span>
+                        <span class="text-brand-dark-700">{{ item }}</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
-          <p class="text-slate-600 mt-3">
-            Durante a pandemia me epecializei no atendimento a vítimas de violência e conflitos familiares
-          </p>
-        </div>
+        <!-- CONTATO -->
+        <section id="contato" class="bg-gradient-to-br from-brand-orange-500 to-brand-orange-600 py-24 text-white">
+            <div class="mx-auto max-w-3xl px-6 text-center">
+                <h2 class="text-3xl font-bold">Vamos construir algo juntos?</h2>
+                <p class="mx-auto mt-4 max-w-xl text-lg text-white/90">
+                    Conte pra gente sobre seu projeto. Respondemos rápido e sem compromisso.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <a
+                        :href="whatsappLink"
+                        target="_blank"
+                        class="rounded-xl bg-brand-dark-900 px-8 py-4 font-semibold text-white shadow-lg transition hover:bg-brand-dark-800"
+                    >
+                        Falar pelo WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-sky-50 p-6 rounded-2xl shadow-sm border border-sky-100">
-            <h3 class="font-semibold text-lg mb-2 text-sky-800">Violência Doméstica</h3>
-            <p class="text-slate-600 text-justify">
-              Acolhimento seguro, escuta sem julgamentos e apoio emocional, ajudando a vítima a
-              compreender a violência, fortalecer sua autonomia e reconstruir sua vida com segurança.
-            </p>
-          </div>
-
-          <div class="bg-rose-50 p-6 rounded-2xl shadow-sm border border-rose-100">
-            <h3 class="font-semibold text-lg mb-2 text-rose-800">Terapias familiares e de casal</h3>
-            <p class="text-slate-600 text-justify">
-              Promoção do diálogo saudável, compreensão mútua e resolução de conflitos, fortalecendo vínculos,
-              respeito e cooperação para relações mais equilibradas e harmoniosas.
-            </p>
-          </div>
-
-          <div class="bg-sky-50 p-6 rounded-2xl shadow-sm border border-sky-100">
-            <h3 class="font-semibold text-lg mb-2 text-sky-800">Relacionamentos abusivos</h3>
-            <p class="text-slate-600 text-justify">
-              Identificar sinais de abuso, fortalecer a autoestima e a autonomia emocional, oferecendo apoio
-              para romper ciclos nocivos e construir relações mais seguras e saudáveis.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTATO -->
-    <section id="contato" class="py-20 bg-gradient-to-r from-sky-200 via-sky-100 to-rose-200 text-slate-900">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-bold mb-4">Contato</h2>
-        <p class="text-slate-700 mb-8 text-lg">
-          Se você sente que é hora de olhar com mais cuidado para si, entre em contato.
-          Será um prazer acompanhá-lo
-        </p>
-
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a
-            :href="whatsappLink"
-            target="_blank"
-            class="bg-sky-500 text-white px-8 py-4 rounded-xl font-semibold shadow hover:bg-sky-600 transition"
-          >
-            Agendar consulta
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="bg-sky-900 text-sky-100 py-8 text-center">
-      <p> CRP 06/86402 </p>
-      <p> ©2026 Alessandra Psicologia Humanista </p>
-      <p> Todos os direitos reservados </p>
-    </footer>
-  </div>
+        <!-- FOOTER -->
+        <footer class="bg-brand-dark-900 py-10 text-brand-dark-200">
+            <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center md:flex-row md:justify-between md:text-left">
+                <div class="flex items-center gap-3">
+                    <ApplicationLogo class="h-10 w-10" />
+                    <span class="flex flex-col leading-none">
+                        <span class="text-base font-extrabold tracking-wide text-white">FONTOURA</span>
+                        <span class="text-[0.6rem] font-semibold tracking-[0.35em] text-brand-orange-400">DESENVOLVIMENTO</span>
+                    </span>
+                </div>
+                <p class="text-sm">
+                    © 2026 Fontoura Desenvolvimento. Todos os direitos reservados.
+                </p>
+            </div>
+        </footer>
+    </div>
 </template>

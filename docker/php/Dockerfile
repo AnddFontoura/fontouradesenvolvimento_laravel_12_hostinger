@@ -42,5 +42,6 @@ USER laravel
 # Define como ponto de entrada
 ENTRYPOINT ["/start.sh"]
 
-# Exponha a porta do Laravel
-EXPOSE 8122
+# Exponha a porta do Laravel (parametrizável via APP_PORT)
+ARG APP_PORT=8132
+EXPOSE ${APP_PORT}

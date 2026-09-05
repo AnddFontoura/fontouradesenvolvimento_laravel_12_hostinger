@@ -12,7 +12,9 @@ else
   echo "✅ Dependências PHP já instaladas."
 fi
 
-# Instala dependências Node.js se node_modules não existir
+# Instala dependências Node.js se node_modules não existir.
+# O servidor Vite é iniciado pelo container "frontend" (docker-compose),
+# então aqui apenas garantimos as dependências instaladas.
 if [ -f "package.json" ]; then
   if [ ! -d "node_modules" ]; then
     echo "📦 Instalando dependências Node.js (npm)..."
@@ -20,9 +22,6 @@ if [ -f "package.json" ]; then
   else
     echo "✅ Dependências Node.js já instaladas."
   fi
-
-  echo "🧪 Iniciando servidor frontend (npm run serve)..."
-  npm run serve &
 else
   echo "⚠️ Nenhum frontend encontrado (package.json não existe)."
 fi
@@ -47,7 +46,8 @@ echo "✅ Banco disponível! Executando migrations..."
 php artisan migrate
 php artisan db:seed
 
-echo "🎯 Iniciando servidor Laravel na porta 8122..."
-php artisan serve --host=0.0.0.0 --port=8122
+APP_PORT="${APP_PORT:-8132}"
+echo "🎯 Iniciando servidor Laravel na porta ${APP_PORT}..."
+php artisan serve --host=0.0.0.0 --port="${APP_PORT}"
 
 php artisan storage:link
