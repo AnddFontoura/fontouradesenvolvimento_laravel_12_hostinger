@@ -11,8 +11,10 @@ defineProps({
     },
 })
 
-// Respeita o <base href> configurado no app.blade.php (config('app.base')).
-const logoSrc = 'img/fontoura-dragao.png'
+// Caminho absoluto a partir da raiz do domínio. Os arquivos de `public/` são
+// servidos a partir da raiz (tanto local quanto na Hostinger), então o caminho
+// absoluto funciona independentemente da rota atual e do <base href>.
+const logoSrc = '/img/fontoura-dragao.png'
 </script>
 
 <template>

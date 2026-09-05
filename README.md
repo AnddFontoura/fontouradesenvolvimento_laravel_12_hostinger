@@ -1,61 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Fontoura Desenvolvimento
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Site institucional e painel interno da Fontoura Desenvolvimento.
 
-## About Laravel
+## Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Backend:** Laravel 12 (PHP 8.2+), Inertia, Sanctum, Ziggy
+- **Frontend:** Vue 3 + Inertia + Tailwind CSS v3 (build com Vite)
+- **Auth:** Laravel Breeze (login, registro, reset de senha, verificação de e-mail)
+- **Banco:** MySQL 8
+- **Ambiente:** Docker (app PHP-FPM, nginx, MySQL e Vite)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> Convenção do projeto: todo o código é escrito em **inglês** (tabelas, colunas,
+> classes, variáveis, rotas). Apenas o texto visível ao usuário final fica em
+> **português**. Detalhes em `.kiro/steering/conventions.md`.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Primeiros passos
 
-## Learning Laravel
+```bash
+# 1. Copie o arquivo de ambiente
+cp .env.example .env
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# 2. Suba os containers
+make up
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# 3. (Se necessário) rode as migrations
+make set-database
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+A aplicação fica disponível via nginx em `http://localhost:8092`.
 
-## Laravel Sponsors
+## Portas (parametrizadas via `.env`)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+As portas dos containers são configuráveis no `.env` para evitar conflito com
+outros projetos rodando localmente:
 
-### Premium Partners
+| Variável          | Padrão | Serviço                         |
+| ----------------- | ------ | ------------------------------- |
+| `APP_PORT`        | `8132` | Servidor Laravel (`artisan serve`) |
+| `WEB_PORT`        | `8092` | nginx (entrada web principal)   |
+| `DB_FORWARD_PORT` | `3322` | MySQL exposto no host           |
+| `VITE_PORT`       | `5185` | Servidor de dev do Vite         |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+## Mudei o `.env` — e agora?
 
-## Contributing
+Não é necessário derrubar tudo. O comportamento depende do tipo de variável:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| O que você mudou                                              | O que fazer                                                                 |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Uma **porta** (`APP_PORT`, `WEB_PORT`, `DB_FORWARD_PORT`, `VITE_PORT`) | `make up` — o Compose recria **apenas** os containers afetados, **sem apagar o banco**. |
+| Variável comum do Laravel (`APP_NAME`, `DB_*`, etc.)          | Nada. Em local, o `artisan serve` relê o `.env` a cada request.             |
+| Variável do Laravel **com config cache ativo**                | `make clear-config`                                                         |
 
-## Code of Conduct
+> **Importante:** evite `docker compose down -v` no dia a dia. A flag `-v`
+> remove o volume do MySQL e **apaga todos os dados**. Use `make down` /
+> `make stop`, que preservam o banco.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Comandos (Makefile)
 
-## Security Vulnerabilities
+| Comando             | O que faz                                                                 |
+| ------------------- | ------------------------------------------------------------------------- |
+| `make up`           | Sobe/atualiza os containers (recria só o que mudou, preserva o banco).    |
+| `make stop`         | Para os containers, preservando o banco.                                  |
+| `make down`         | Remove os containers, preservando o banco.                                |
+| `make restart`      | Reinicia os containers, preservando o banco.                              |
+| `make apply`        | Aplica mudanças do `.env`/compose recriando o necessário.                 |
+| `make clear-config` | Limpa caches de config/rota do Laravel.                                   |
+| `make set-database` | Roda `migrate` + `db:seed`.                                               |
+| `make reset-database` | Roda `migrate:fresh` (recria as tabelas).                               |
+| `make build-js`     | Gera o build de produção do frontend (`npm run build`).                   |
+| `make down-hard`    | **PERIGO:** remove containers **e o volume do banco** (apaga os dados).   |
+| `make reset`        | **PERIGO:** recria tudo do zero, apagando o banco.                        |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Frontend
 
-## License
+- Em desenvolvimento, o container `frontend` roda o Vite automaticamente.
+- Para gerar o build de produção: `make build-js` (ou `npm run build`).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Identidade visual
+
+- Paleta da marca definida como tokens no `tailwind.config.js`: `brand-orange`
+  (gradiente do logo) e `brand-dark` (roxo escuro/quase-preto). Use sempre esses
+  tokens.
+- Logo (dragão) em `public/img/fontoura-dragao.png`, servido pelo componente
+  `resources/js/Components/ApplicationLogo.vue`.

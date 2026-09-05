@@ -3,6 +3,14 @@ RewriteEngine On
 
 # Allow Installatron requests
 RewriteCond %{REQUEST_FILENAME} deleteme\.\w+\.php
-RewriteRule (.*) - [L] 
+RewriteRule (.*) - [L]
 
+# Serve existing files and directories directly (images, CSS, JS, build assets).
+# Without this, every request (including static assets) is sent to index.php
+# and Laravel returns 404 for them.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Send everything else to the Laravel front controller.
 RewriteRule ^ index.php [L]
