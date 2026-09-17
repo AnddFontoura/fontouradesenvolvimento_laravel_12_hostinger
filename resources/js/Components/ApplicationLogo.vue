@@ -22,7 +22,10 @@ const logoSrc = computed(() => {
     <div v-if="variant === 'full'" class="inline-flex items-center gap-3">
         <img
             :src="logoSrc"
-            alt="Fontoura Desenvolvimento"
+            alt="Logo da Fontoura Desenvolvimento"
+            width="921"
+            height="732"
+            decoding="async"
             class="h-full w-auto object-contain"
         />
         <span class="flex flex-col leading-none">
@@ -39,7 +42,10 @@ const logoSrc = computed(() => {
     <img
         v-else
         :src="logoSrc"
-        alt="Fontoura Desenvolvimento"
+        alt="Logo da Fontoura Desenvolvimento"
+        width="921"
+        height="732"
+        decoding="async"
         class="object-contain"
     />
 </template>

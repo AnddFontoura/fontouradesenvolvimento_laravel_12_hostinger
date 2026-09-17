@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactCategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactNoteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SeoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,6 +21,10 @@ Route::get('/', function () {
 Route::post('/contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
+
+// SEO endpoints (public).
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -63,7 +63,24 @@ const differentials = [
 </script>
 
 <template>
-    <Head title="Desenvolvimento de Software" />
+    <Head>
+        <title>Desenvolvimento de Software Sob Medida | Fontoura Desenvolvimento</title>
+        <meta
+            head-key="description"
+            name="description"
+            content="A Fontoura Desenvolvimento cria aplicações web modernas, escaláveis e confiáveis com Laravel e Vue. Sistemas sob medida, APIs, integrações e sustentação."
+        />
+        <meta
+            head-key="og:title"
+            property="og:title"
+            content="Desenvolvimento de Software Sob Medida | Fontoura Desenvolvimento"
+        />
+        <meta
+            head-key="og:description"
+            property="og:description"
+            content="Aplicações web modernas com Laravel e Vue: sistemas sob medida, APIs, integrações e sustentação para o seu negócio."
+        />
+    </Head>
 
     <div class="min-h-screen bg-white text-brand-dark-800">
         <!-- HEADER -->
